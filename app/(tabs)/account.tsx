@@ -2,8 +2,8 @@ import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function explore(){{
+export default function account(){{
     return <SafeAreaView>
-        <Text>Explore Page</Text>
+        <Text>Account Page</Text>
     </SafeAreaView>
 }}
