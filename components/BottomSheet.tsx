@@ -1,9 +1,13 @@
+import { Wallpaper } from '@/hooks/useWallpapers';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useRef } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ThemedText } from './ThemedText';
 
-export const DownloadPicture = ({onClose}:{
+export const DownloadPicture = ({ onClose, wallpaper }:{
     onClose: () => void;
+    wallpaper: Wallpaper
 }) => {
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -23,16 +27,69 @@ export const DownloadPicture = ({onClose}:{
         onChange={handleSheetChanges}
         snapPoints={["95%"]}
         enablePanDownToClose={true}
-        handleIndicatorStyle={{height:0}}
-
+        handleIndicatorStyle={{display: 'none'}}
+        handleStyle={{display: 'none'}}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
+          <Image style={styles.image} source={{uri:wallpaper.url}} />
+          <View style={styles.topBar}>
+            <Ionicons 
+              name={'close'} 
+              size={24}
+              color={'white'}
+            />
+            <View style={styles.LikeShare}>
+              <Ionicons 
+              name={'heart'} 
+              size={24}
+              color={'white'}
+              style={{paddingRight: 10}}
+            />
+            <Ionicons 
+              name={'share'} 
+              size={24}
+              color={'white'}
+              style={{paddingRight: 5}}
+            />
+            </View>
+          </View>
+          <View style={styles.textContainer}>
+            <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
+          </View>
+          <DownloadButton />
         </BottomSheetView>
       </BottomSheet>
     // </GestureHandlerRootView>
   );
 };
+
+function DownloadButton(){
+  return <Pressable style={{
+    backgroundColor: 'black',
+    padding:10,
+    marginHorizontal: 40,
+    marginVertical:20,
+    
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius:10,
+
+  }}>
+    <Ionicons 
+      name={'download'} 
+      size={24}
+      color={'white'}
+      style={{paddingRight: 5}}
+    />
+    <Text style={{ 
+      fontSize: 20, 
+      color: 'white', 
+      fontWeight: '600', 
+
+      }}>Download</Text>
+
+  </Pressable>
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -40,6 +97,34 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
-  },
+    height:'100%',
+    // backgroundColor: 'red',
+    // paddingTop:10
+    // alignItems: 'center',
+  }, image: {
+    height: '70%',
+    borderRadius: 15,
+  }, topBar: {
+    position: 'absolute',
+    padding: 10,
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: '100%'
+  }, LikeShare: {
+    display: 'flex',
+    flexDirection: 'row',
+  }, 
+  textContainer: {
+    width: '100%'
+  }, 
+  text: {
+    padding: 20,
+    fontSize: 30,
+    fontWeight: 600,
+    textAlign: 'center',
+
+  }
+
+
 });

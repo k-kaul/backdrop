@@ -17,7 +17,7 @@ export default function ImageCard({wallpaper, onPress}:{
                         <ThemedText style={styles.label}>{wallpaper.name}</ThemedText>
                         <View style={styles.iconContainer}>
                             <Ionicons 
-                            name="heart" 
+                            name={"heart"} 
                             size={18}
                             color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
                         />
