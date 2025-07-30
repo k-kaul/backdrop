@@ -7,23 +7,23 @@ export default function Layout(){
     return (
         <Tabs screenOptions={{tabBarActiveTintColor: 'blue', headerShown: false}}>
             <Tabs.Screen 
-            name="index"
+            name="foryou"
             options={{
                 title: 'For You',
                 tabBarIcon: ({color}) => <FontAwesome size={20} name='home' color={color}/>
             }}
             />
             <Tabs.Screen 
-            name="account"
+            name="index"
             options={{
-                title: 'Account',
+                title: 'Explore',
                 tabBarIcon: ({color}) => <FontAwesome size={20} name='cog' color={color}/>
             }}
             />
             <Tabs.Screen 
-            name="explore"
+            name="account"
             options={{
-                title: 'Explore',
+                title: 'Account',
                 tabBarIcon: ({color}) => <FontAwesome size={20} name='cog' color={color}/>
             }}
             />
