@@ -7,7 +7,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function foryou() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator style={{paddingTop: 60}}>
       <Tab.Screen name="Library" component={LibraryScreen} />
       <Tab.Screen name="Liked" component={LikedScreen} />
       <Tab.Screen name="Suggested" component={SuggestedScreen} />

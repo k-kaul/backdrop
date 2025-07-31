@@ -1,9 +1,11 @@
+import { Colors } from '@/constants/Colors';
 import { Wallpaper } from '@/hooks/useWallpapers';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useRef } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { ThemedText } from './ThemedText';
+import { ThemedView } from './ThemedView';
 
 export const DownloadPicture = ({ onClose, wallpaper }:{
     onClose: () => void;
@@ -17,6 +19,7 @@ export const DownloadPicture = ({ onClose, wallpaper }:{
     console.log('handleSheetChanges', index);
   }, []);
 
+const theme = useColorScheme() ?? 'light';
   // renders
   return (
     // <GestureHandlerRootView style={styles.container}>
@@ -31,32 +34,34 @@ export const DownloadPicture = ({ onClose, wallpaper }:{
         handleStyle={{display: 'none'}}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <Image style={styles.image} source={{uri:wallpaper.url}} />
-          <View style={styles.topBar}>
-            <Ionicons 
-              name={'close'} 
-              size={24}
-              color={'white'}
-            />
-            <View style={styles.LikeShare}>
+          <ThemedView style={{flex:1}}>
+            <Image style={styles.image} source={{uri:wallpaper.url}} />
+            <View style={styles.topBar}>
               <Ionicons 
-              name={'heart'} 
-              size={24}
-              color={'white'}
-              style={{paddingRight: 10}}
-            />
-            <Ionicons 
-              name={'share'} 
-              size={24}
-              color={'white'}
-              style={{paddingRight: 5}}
-            />
+                name={'close'} 
+                size={24}
+                color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
+              />
+              <View style={styles.LikeShare}>
+                <Ionicons 
+                name={'heart'} 
+                size={24}
+                color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
+                style={{paddingRight: 10}}
+              />
+              <Ionicons 
+                name={'share'} 
+                size={24}
+                color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
+                style={{paddingRight: 5}}
+              />
+              </View>
             </View>
-          </View>
-          <View style={styles.textContainer}>
-            <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
-          </View>
-          <DownloadButton />
+            <ThemedView style={styles.textContainer}>
+              <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
+            </ThemedView>
+            <DownloadButton />
+          </ThemedView>
         </BottomSheetView>
       </BottomSheet>
     // </GestureHandlerRootView>
@@ -64,12 +69,16 @@ export const DownloadPicture = ({ onClose, wallpaper }:{
 };
 
 function DownloadButton(){
+
+  const theme = useColorScheme() ?? 'light';
+
   return <Pressable style={{
     backgroundColor: 'black',
     padding:10,
     marginHorizontal: 40,
     marginVertical:20,
-    
+    borderColor: theme === 'light' ? Colors.light.icon : Colors.dark.icon,
+    borderWidth:1,    
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius:10,
@@ -78,7 +87,7 @@ function DownloadButton(){
     <Ionicons 
       name={'download'} 
       size={24}
-      color={'white'}
+      color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
       style={{paddingRight: 5}}
     />
     <Text style={{ 

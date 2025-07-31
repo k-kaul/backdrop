@@ -1,7 +1,7 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import SplitView from "@/components/SplitView";
 import { useWallpapers } from "@/hooks/useWallpapers";
-import { Image, StyleSheet } from "react-native";
+import { Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
@@ -16,22 +16,7 @@ export default function Explore(){{
                 }>            
                 
                 <SplitView wallpapers={wallpapers}/>
-                
+
         </ParallaxScrollView>
     </SafeAreaView>
 }}
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flex: 1,
-    },
-    innerContainer: {
-        flex: 1,
-        padding: 10,
-        gap: 5
-    }, 
-    imageContainer: {
-        paddingVertical: 10
-    }
-})
