@@ -1,27 +1,51 @@
+import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
-import { Appearance, Pressable, StyleSheet, useColorScheme } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Appearance, Pressable, ScrollView, StyleSheet, useColorScheme } from "react-native";
 
 
 export default function Account(){
 
-    return <SafeAreaView style={{flex:1}}>
-        <Header />
-        <ThemedView style={{flex:1}}>
-            <LoginButtons />
-            <ThemeSelector />
+    return <ThemedSafeAreaView style={{flex:1}}>
+        <ScrollView style={{flex:1,}}>
+            <Header />
+            <ThemedView style={{flex:1, height:'100%'}}>
+                <LoginButtons />
+                <ThemeSelector />
+                <About />
+            </ThemedView>
+        </ScrollView>
+    </ThemedSafeAreaView>
+    
+}
+
+function About(){
+    return <ThemedView style={styles.margin}>
+        <ThemedText style={styles.textBig}>About</ThemedText>
+        <ThemedView style={{ marginTop:10 }}>
+            <Pressable>
+                <ThemedText style={{margin:10, fontSize:20}}>Account</ThemedText>
+            </Pressable>
+            <Pressable>
+                <ThemedText style={{margin:10, fontSize:20}}>Privacy Policy</ThemedText>
+            </Pressable>
+            <Pressable>
+                <ThemedText style={{margin:10, fontSize:20}}>Terms of Service</ThemedText>
+            </Pressable>
+            <Pressable>
+                <ThemedText style={{margin:10, fontSize:20}}>Licences</ThemedText>
+            </Pressable>
         </ThemedView>
-    </SafeAreaView>
+    </ThemedView>
 }
 
 function ThemeSelector(){
     return <ThemedView style={styles.margin}>
             <ThemedText style={styles.textBig}>Settings</ThemedText>
-            <ThemedText>Theme</ThemedText>
+            <ThemedText style={{marginVertical:5}}>Select a Theme</ThemedText>
             <ThemedView style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:10}}>
                 <ThemeButton title="Dark" colorScheme='dark' selected={false}/>
                 <ThemeButton title="Light" colorScheme='light' selected={false}/>
@@ -113,9 +137,10 @@ const styles = StyleSheet.create({
     textBig: {
         fontSize: 30,
         fontWeight: '600',
+        height:35,
     }, 
     topBar: {
-        padding: 20,
+        padding: 30,
     },
     themeSelectorChild: {
         flex: 0.33
@@ -124,6 +149,6 @@ const styles = StyleSheet.create({
         flex: 1,
     }, 
     margin: {
-        padding:20,
+        padding:30,
     }
 })

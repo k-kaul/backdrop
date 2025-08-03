@@ -2,6 +2,8 @@ import { Colors } from '@/constants/Colors';
 import { Wallpaper } from '@/hooks/useWallpapers';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 import React, { useCallback, useRef } from 'react';
 import { Image, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { ThemedText } from './ThemedText';
@@ -28,7 +30,7 @@ const theme = useColorScheme() ?? 'light';
         onClose={onClose}
         ref={bottomSheetRef}
         onChange={handleSheetChanges}
-        snapPoints={["95%"]}
+        snapPoints={["92%"]}
         enablePanDownToClose={true}
         handleIndicatorStyle={{display: 'none'}}
         handleStyle={{display: 'none'}}
@@ -38,6 +40,7 @@ const theme = useColorScheme() ?? 'light';
             <Image style={styles.image} source={{uri:wallpaper.url}} />
             <View style={styles.topBar}>
               <Ionicons 
+                onPress={onClose}
                 name={'close'} 
                 size={24}
                 color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
@@ -60,7 +63,7 @@ const theme = useColorScheme() ?? 'light';
             <ThemedView style={styles.textContainer}>
               <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
             </ThemedView>
-            <DownloadButton />
+            <DownloadButton url={wallpaper.url}/>
           </ThemedView>
         </BottomSheetView>
       </BottomSheet>
@@ -68,11 +71,30 @@ const theme = useColorScheme() ?? 'light';
   );
 };
 
-function DownloadButton(){
-
+function DownloadButton({ url }:{ url: string }){
   const theme = useColorScheme() ?? 'light';
+  return <Pressable onPress={async () => {
+    let date = new Date().getTime();
+    let fileUri = FileSystem.documentDirectory + `${date}.jpg`; 
+    
+    try {
+      console.log(url)
+      console.log(fileUri)
+      await FileSystem.downloadAsync(url, fileUri); 
+      const resposne = await MediaLibrary.requestPermissionsAsync(true);
+    
+      if(resposne.granted){
+        MediaLibrary.createAssetAsync(fileUri);
+        alert('Downloaded')
+      } else {
+        console.error("Permission Denied")
+      }
+    
+    } catch (error) {
+      console.error('FS Error',error);
+    }
 
-  return <Pressable style={{
+  }} style={{
     backgroundColor: 'black',
     padding:10,
     marginHorizontal: 40,
