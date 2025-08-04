@@ -32,7 +32,8 @@ export default function Explore(){{
     })
 
     return <ThemedSafeAreaView style={{flex:1}}>
-            <Animated.View style={[{height: TOPBAR_HEIGHT - yOffset}, headerAnimatedStyle]}>
+            <Animated.View style={[{height: TOPBAR_HEIGHT - yOffset}, headerAnimatedStyle
+            ]}>
                 <Carousel
                     loop
                     width={width}
@@ -47,7 +48,7 @@ export default function Explore(){{
                             style={{
                                 flex:1,
                                 borderWidth: 1,
-                                justifyContent:'center'
+                                justifyContent:'center',
                             }}
                             >
                             <Image source={{ uri:carouselItems[index].image }} style={{height:TOPBAR_HEIGHT}}/>
@@ -65,10 +66,10 @@ export default function Explore(){{
                     )}
                 />
             </Animated.View>
-            <View style={{ borderRadius: 20}}>
-                <SplitView onScroll={(yOffset) => {
-                    setScrollY(yOffset);
-                    }} wallpapers={wallpapers}/>
-            </View>
+            <SplitView onScroll={(yOffset) => {
+                setScrollY(yOffset);
+                }} wallpapers={wallpapers}
+                />
+
     </ThemedSafeAreaView>
 }}
